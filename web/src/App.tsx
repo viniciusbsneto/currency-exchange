@@ -1,11 +1,12 @@
 import React from 'react';
+import CurrencyConversion from './pages/CurrencyConversion';
 
 import GlobalStyle from './styles/global';
 
 const App: React.FC = () => {
   return (
     <>
-      <h1>Currency Converter</h1>
+      <CurrencyConversion />
       <GlobalStyle />
     </>
   );
