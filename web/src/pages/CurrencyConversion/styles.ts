@@ -48,22 +48,6 @@ export const LastQuote = styled.div`
   }
 `;
 
-export const CloseValue = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  line-height: 24px;
-`;
-
-export const MinimumValue = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  line-height: 24px;
-`;
-
 export const MaximumValue = styled.div`
   display: flex;
   align-items: center;
@@ -71,6 +55,10 @@ export const MaximumValue = styled.div`
 
   line-height: 24px;
 `;
+
+export const CloseValue = MaximumValue;
+
+export const MinimumValue = MaximumValue;
 
 export const CurrencyExchange = styled.div`
   display: flex;
@@ -118,3 +106,38 @@ export const CurrencyItem = styled.div`
     margin-left: auto;
   }
 `;
+
+export const ConversionDetailsContainer = styled.div`
+  width: 100%;
+  height: 518px;
+
+  h1 {
+    margin-bottom: 16px;
+  }
+`;
+
+export const ConversionDetails = styled.div`
+  width: 100%;
+  height: 465px;
+
+  display: flex;
+  flex-direction: column;
+
+  background: #fff;
+  border-radius: 5px;
+  padding: 24px;
+`;
+
+export const CurrencyQuote = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  line-height: 32px;
+`;
+
+export const IOFFee = CurrencyQuote;
+export const CurrencyWithoutFees = CurrencyQuote;
+export const CurrencyWithFees = CurrencyQuote;
+export const ConvertedCurrencyWithoutFees = CurrencyQuote;
+export const ConvertedCurrencyWithFees = CurrencyQuote;

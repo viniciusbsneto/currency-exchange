@@ -14,14 +14,23 @@ import {
   Radio,
   RadioGroup,
 } from '@material-ui/core';
+
 import {
   CloseValue,
   Container,
   Content,
   ContentWrapper,
+  ConversionDetails,
+  ConversionDetailsContainer,
+  ConvertedCurrencyWithFees,
+  ConvertedCurrencyWithoutFees,
   ConverterContainer,
   CurrencyExchange,
   CurrencyItem,
+  CurrencyQuote,
+  CurrencyWithFees,
+  CurrencyWithoutFees,
+  IOFFee,
   LastQuote,
   LastQuoteContainer,
   MaximumValue,
@@ -31,8 +40,13 @@ import {
 import BRAImg from '../../assets/images/BRA.svg';
 import USDImg from '../../assets/images/USD.svg';
 
-import convertCurrencyAmount from '../../utils/convertCurrencyAmount';
 import { getCurrencyLastQuoteService } from '../../services/api';
+
+import convertCurrencyAmount from '../../utils/convertCurrencyAmount';
+import getOriginalCurrencyWithoutFees from '../../utils/getOriginalCurrencyWithFees';
+import getIOF from '../../utils/getIOF';
+import getConvertedCurrencyWithoutFees from '../../utils/getConvertedCurrencyWithouFees';
+import formatCurrency from '../../utils/formatCurrency';
 
 const CurrencyConversion: React.FC = () => {
   const [
@@ -97,11 +111,85 @@ const CurrencyConversion: React.FC = () => {
         currencyAmount,
         stateFee,
         currencyLastQuote.bid,
-      ).toFixed(2);
+      );
     }
 
     return 0;
   }, [currencyAmount, currencyLastQuote, paymentType, stateFee]);
+
+  const formattedCurrencyLastQuoteLow = useMemo(() => {
+    if (currencyLastQuote) {
+      return formatCurrency(currencyLastQuote.codein, currencyLastQuote.low);
+    }
+
+    return 'Não disponível';
+  }, [currencyLastQuote]);
+
+  const formattedCurrencyLastQuoteHigh = useMemo(() => {
+    if (currencyLastQuote) {
+      return formatCurrency(currencyLastQuote.codein, currencyLastQuote.high);
+    }
+
+    return 'Não disponível';
+  }, [currencyLastQuote]);
+
+  const formattedCurrencyLastQuoteClose = useMemo(() => {
+    if (currencyLastQuote) {
+      return formatCurrency(currencyLastQuote.codein, currencyLastQuote.bid);
+    }
+
+    return 'Não disponível';
+  }, [currencyLastQuote]);
+
+  const formattedCurrencyQuote = useMemo(() => {
+    if (currencyLastQuote) {
+      return formatCurrency(currencyLastQuote.code, currencyLastQuote.bid);
+    }
+
+    return 'Não disponível';
+  }, [currencyLastQuote]);
+
+  const formattedIOF = useMemo(() => {
+    return `${(getIOF(paymentType) * 100).toFixed(2)}%`;
+  }, [paymentType]);
+
+  const formattedCurrencyWithoutFees = useMemo(() => {
+    if (currencyLastQuote) {
+      return formatCurrency(currencyLastQuote.code, currencyAmount);
+    }
+
+    return 'Não disponível';
+  }, [currencyLastQuote, currencyAmount]);
+
+  const formattedCurrencyWithFees = useMemo(() => {
+    if (currencyLastQuote) {
+      return formatCurrency(
+        currencyLastQuote.code,
+        getOriginalCurrencyWithoutFees(currencyAmount, stateFee, paymentType),
+      );
+    }
+
+    return 'Não disponível';
+  }, [currencyLastQuote, currencyAmount, stateFee, paymentType]);
+
+  const formattedConvertedCurrencyWithoutFees = useMemo(() => {
+    if (currencyLastQuote) {
+      return formatCurrency(
+        currencyLastQuote.codein,
+        getConvertedCurrencyWithoutFees(currencyAmount, currencyLastQuote.bid),
+      );
+    }
+
+    return 'Não disponível';
+  }, [currencyLastQuote, currencyAmount]);
+
+  const formattedConvertedCurrencyWithFees = useMemo(() => {
+    if (currencyLastQuote) {
+      return formatCurrency(currencyLastQuote.codein, convertedCurrencyAmount);
+    }
+
+    return 'Não disponível';
+  }, [currencyLastQuote, convertedCurrencyAmount]);
 
   return (
     <Container>
@@ -115,15 +203,15 @@ const CurrencyConversion: React.FC = () => {
                   <>
                     <MinimumValue>
                       <strong>Mínimo:</strong>
-                      <span>{`R$${currencyLastQuote.low}`}</span>
+                      <span>{formattedCurrencyLastQuoteLow}</span>
                     </MinimumValue>
                     <MaximumValue>
                       <strong>Máximo:</strong>
-                      <span>{`R$${currencyLastQuote.high}`}</span>
+                      <span>{formattedCurrencyLastQuoteHigh}</span>
                     </MaximumValue>
                     <CloseValue>
                       <strong>Fechamento</strong>
-                      <span>{`R$${currencyLastQuote.bid}`}</span>
+                      <span>{formattedCurrencyLastQuoteClose}</span>
                     </CloseValue>
                     <span>{`Atualizado em: ${currencyLastQuoteDate}`}</span>
                   </>
@@ -227,7 +315,7 @@ const CurrencyConversion: React.FC = () => {
                     <>
                       <div>
                         <img src={BRAImg} alt={currencyLastQuote.codein} />
-                        <strong>{`R$${convertedCurrencyAmount}`}</strong>
+                        <strong>{formattedConvertedCurrencyWithFees}</strong>
                       </div>
                       <strong>{currencyLastQuote.codein}</strong>
                     </>
@@ -238,6 +326,53 @@ const CurrencyConversion: React.FC = () => {
               </div>
             </CurrencyExchange>
           </ConverterContainer>
+          <ConversionDetailsContainer>
+            <h1>Resumo</h1>
+            <ConversionDetails>
+              <CurrencyQuote>
+                <strong>
+                  {`Cotação ${currencyLastQuote && currencyLastQuote.code}`}
+                </strong>
+                <span>{formattedCurrencyQuote}</span>
+              </CurrencyQuote>
+              <IOFFee>
+                <strong>IOF</strong>
+                <span>{formattedIOF}</span>
+              </IOFFee>
+              <CurrencyWithoutFees>
+                <strong>
+                  {`Total ${
+                    currencyLastQuote && currencyLastQuote.code
+                  } sem impostos`}
+                </strong>
+                <span>{formattedCurrencyWithoutFees}</span>
+              </CurrencyWithoutFees>
+              <CurrencyWithFees>
+                <strong>
+                  {`Total ${
+                    currencyLastQuote && currencyLastQuote.code
+                  } com impostos`}
+                </strong>
+                <span>{formattedCurrencyWithFees}</span>
+              </CurrencyWithFees>
+              <ConvertedCurrencyWithoutFees>
+                <strong>
+                  {`Total ${
+                    currencyLastQuote && currencyLastQuote.codein
+                  } sem impostos`}
+                </strong>
+                <span>{formattedConvertedCurrencyWithoutFees}</span>
+              </ConvertedCurrencyWithoutFees>
+              <ConvertedCurrencyWithFees>
+                <strong>
+                  {`Total ${
+                    currencyLastQuote && currencyLastQuote.codein
+                  } com impostos`}
+                </strong>
+                <span>{formattedConvertedCurrencyWithFees}</span>
+              </ConvertedCurrencyWithFees>
+            </ConversionDetails>
+          </ConversionDetailsContainer>
         </ContentWrapper>
       </Content>
     </Container>
