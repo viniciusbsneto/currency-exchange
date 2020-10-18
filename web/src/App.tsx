@@ -1,4 +1,5 @@
 import React from 'react';
+import { StylesProvider } from '@material-ui/core/styles';
 import CurrencyConversion from './pages/CurrencyConversion';
 
 import GlobalStyle from './styles/global';
@@ -6,8 +7,10 @@ import GlobalStyle from './styles/global';
 const App: React.FC = () => {
   return (
     <>
-      <CurrencyConversion />
-      <GlobalStyle />
+      <StylesProvider injectFirst>
+        <CurrencyConversion />
+        <GlobalStyle />
+      </StylesProvider>
     </>
   );
 };
