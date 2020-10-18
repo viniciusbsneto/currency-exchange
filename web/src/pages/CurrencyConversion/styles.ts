@@ -71,3 +71,50 @@ export const MaximumValue = styled.div`
 
   line-height: 24px;
 `;
+
+export const CurrencyExchange = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  > div {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    > svg {
+      width: 28px;
+      height: 28px;
+      margin: 8px 0;
+    }
+  }
+`;
+
+export const CurrencyItem = styled.div`
+  width: 100%;
+  height: 100px;
+
+  display: flex;
+  align-items: center;
+
+  background: #fff;
+  border-radius: 5px;
+  padding: 24px;
+
+  > div {
+    display: flex;
+    align-items: center;
+
+    img {
+      width: 60px;
+      border-radius: 50%;
+      margin-right: 16px;
+    }
+  }
+
+  strong {
+    margin-left: auto;
+  }
+`;
