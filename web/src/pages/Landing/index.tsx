@@ -1,5 +1,6 @@
 import React from 'react';
 import { FiLogIn } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 
 import logo from '../../assets/images/logo.png';
 
@@ -17,12 +18,12 @@ const Landing: React.FC = () => {
           <p>
             Transparência e segurança para uma vida global sem letras miúdas.
           </p>
-          <a href="/currency-conversion">
+          <Link to="/currency-conversion">
             <span>
               <FiLogIn />
             </span>
             <strong>Entrar</strong>
-          </a>
+          </Link>
         </Main>
       </Content>
     </Container>
