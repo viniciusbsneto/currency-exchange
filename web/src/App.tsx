@@ -1,8 +1,8 @@
 import React from 'react';
 import { StylesProvider } from '@material-ui/core/styles';
+import { BrowserRouter } from 'react-router-dom';
 
-// import CurrencyConversion from './pages/CurrencyConversion';
-import Landing from './pages/Landing';
+import Routes from './routes';
 
 import GlobalStyle from './styles/global';
 
@@ -10,7 +10,9 @@ const App: React.FC = () => {
   return (
     <>
       <StylesProvider injectFirst>
-        <Landing />
+        <BrowserRouter>
+          <Routes />
+        </BrowserRouter>
         <GlobalStyle />
       </StylesProvider>
     </>
