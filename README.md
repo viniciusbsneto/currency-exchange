@@ -5,7 +5,7 @@
 </h1>
 
 <h1 align="center">
-   :green_circle: <a href="#"> Catch N' Mall </a> :white_circle:
+   :green_circle: <a href="#"> Dollar Ex </a> :white_circle:
 </h1>
 
 <h3 align="center">
