@@ -1,13 +1,13 @@
 import getIOF from './getIOF';
 
-const getOriginalCurrencyWithoutFees = (
+const getOriginalCurrencyWithFees = (
   currencyAmount: number,
   stateFee: number,
   paymentType: string,
 ): number => {
   const IOF = getIOF(paymentType);
 
-  return currencyAmount + stateFee + IOF;
+  return currencyAmount === 0 ? 0 : currencyAmount + stateFee + IOF;
 };
 
-export default getOriginalCurrencyWithoutFees;
+export default getOriginalCurrencyWithFees;
