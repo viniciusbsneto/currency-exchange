@@ -7,7 +7,9 @@ const getOriginalCurrencyWithFees = (
 ): number => {
   const IOF = getIOF(paymentType);
 
-  return currencyAmount === 0 ? 0 : currencyAmount + stateFee + IOF;
+  return (
+    currencyAmount + currencyAmount * (stateFee / 100) + currencyAmount * IOF
+  );
 };
 
 export default getOriginalCurrencyWithFees;

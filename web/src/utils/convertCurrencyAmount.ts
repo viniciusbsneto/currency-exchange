@@ -9,11 +9,19 @@ const convertCurrencyAmount = (
   const IOF = getIOF(paymentType);
 
   if (paymentType === 'cash') {
-    return (currencyAmount + stateFee / 100) * (currencyLastQuote + IOF);
+    return (
+      (currencyAmount + currencyAmount * (stateFee / 100)) *
+      (currencyLastQuote + currencyLastQuote * IOF)
+    );
   }
 
   if (paymentType === 'card') {
-    return (currencyAmount + stateFee / 100 + IOF) * currencyLastQuote;
+    return (
+      (currencyAmount + currencyAmount * (stateFee / 100)) * currencyLastQuote +
+      (currencyAmount + currencyAmount * (stateFee / 100)) *
+        currencyLastQuote *
+        IOF
+    );
   }
 
   return 0;
