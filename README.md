@@ -1,7 +1,7 @@
 
 
 <h1 align="center">
-    <img alt="Dollar Ex - Currency Exchange" title="#Dollar Ex - Currency Exchange" src="https://imgur.com/a/KZgtyjH" />
+    <img alt="Dollar Ex - Currency Exchange" title="#Dollar Ex - Currency Exchange" src="https://i.imgur.com/Q22YlI9.png" />
 </h1>
 
 <h1 align="center">
