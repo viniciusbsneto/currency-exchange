@@ -40,7 +40,6 @@ import USDImg from '../../assets/images/USD.svg';
 import { getCurrencyLastQuoteService } from '../../services/api';
 
 import convertCurrencyAmount from '../../utils/convertCurrencyAmount';
-import getOriginalCurrencyWithoutFees from '../../utils/getOriginalCurrencyWithFees';
 import getIOF from '../../utils/getIOF';
 import getConvertedCurrencyWithoutFees from '../../utils/getConvertedCurrencyWithouFees';
 import formatCurrency from '../../utils/formatCurrency';
