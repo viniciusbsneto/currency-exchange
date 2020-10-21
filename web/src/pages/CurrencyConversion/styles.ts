@@ -1,50 +1,26 @@
 import styled from 'styled-components';
 
-export const Container = styled.div``;
-
-export const Content = styled.div`
-  height: 100vh;
-  max-width: 1120px;
-
-  padding: 64px 0;
-  margin: 0 auto;
-`;
-
-export const ContentWrapper = styled.div`
-  display: flex;
-
-  align-items: baseline;
-  justify-content: space-between;
-`;
-
-export const ConverterContainer = styled.div`
-  width: 100%;
-
-  margin-right: 32px;
+export const LastQuoteContainer = styled.div`
+  margin-bottom: 1.6rem;
 
   h1 {
-    margin-bottom: 16px;
+    margin-bottom: 0.8rem;
   }
-`;
-
-export const LastQuoteContainer = styled.div`
-  margin-bottom: 16px;
 `;
 
 export const LastQuote = styled.div`
   width: 100%;
-  height: 150px;
 
   display: flex;
   flex-direction: column;
 
-  background: #fff;
-  border-radius: 5px;
-  padding: 24px;
+  background: var(--paper-background-color);
+  border-radius: 0.5rem;
+  padding: 2.4rem;
 
   > span {
-    font-size: 14px;
-    margin-top: 16px;
+    font-size: 1.4rem;
+    margin-top: 1.6rem;
   }
 `;
 
@@ -53,7 +29,7 @@ export const MaximumValue = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  line-height: 24px;
+  line-height: 2.8rem;
 `;
 
 export const CloseValue = MaximumValue;
@@ -64,6 +40,10 @@ export const CurrencyExchange = styled.div`
   display: flex;
   flex-direction: column;
 
+  h1 {
+    margin-bottom: 0.8rem;
+  }
+
   > div {
     width: 100%;
 
@@ -73,32 +53,127 @@ export const CurrencyExchange = styled.div`
     justify-content: center;
 
     > svg {
-      width: 28px;
-      height: 28px;
-      margin: 8px 0;
+      width: 2.8rem;
+      height: 2.8rem;
+      margin: 0.8rem 0;
     }
   }
 `;
 
-export const CurrencyItem = styled.div`
+export const InputBlock = styled.fieldset`
   width: 100%;
-  height: 100px;
+  margin-right: 0.8rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 0.8rem 1.6rem;
+  border: 0.1rem solid var(--light-color);
+  border-radius: 0.5rem;
+
+  input {
+    border: 0;
+    background: transparent;
+  }
+
+  legend {
+    font: 400 1.4rem Roboto;
+  }
+`;
+
+export const InputBlockGroup = styled.div`
+  width: 100%;
+
+  display: flex;
+
+  > div {
+    margin-top: 0.8rem;
+  }
+
+  @media (max-width: 1230px) {
+    width: 100%;
+    flex-direction: column;
+  }
+`;
+
+export const PaymentFieldset = styled.fieldset`
+  width: 100%;
+  margin: 1.6rem 0 0 0.8rem;
+
+  display: flex;
+  flex-direction: column;
+  border: 0;
+
+  legend {
+    color: var(--text-color);
+  }
+
+  .MuiFormControlLabel-label {
+    font: 400 1.4rem Roboto;
+    color: var(--text-color);
+  }
+`;
+
+export const CurrencyItemInput = styled.div`
+  width: 100%;
 
   display: flex;
   align-items: center;
 
-  background: #fff;
-  border-radius: 5px;
-  padding: 24px;
+  background: var(--paper-background-color);
+  border-radius: 0.5rem;
+  padding: 2.4rem;
 
   > div {
+    width: 100%;
+
     display: flex;
     align-items: center;
 
     img {
-      width: 60px;
+      width: 6rem;
       border-radius: 50%;
-      margin-right: 16px;
+      margin-right: 1.6rem;
+
+      @media (max-width: 520px) {
+        margin-bottom: 0.8rem;
+      }
+    }
+
+    @media (max-width: 520px) {
+      width: 100%;
+      flex-direction: column;
+    }
+  }
+
+  strong {
+    margin-left: auto;
+
+    @media (max-width: 520px) {
+      margin: 0.8rem auto 0;
+    }
+  }
+`;
+
+export const CurrencyItemOutput = styled.div`
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  background: var(--paper-background-color);
+  border-radius: 0.5rem;
+  padding: 2.4rem;
+
+  div {
+    display: flex;
+    align-items: center;
+
+    img {
+      width: 6rem;
+      border-radius: 50%;
+      margin-right: 1.6rem;
     }
   }
 
@@ -109,23 +184,21 @@ export const CurrencyItem = styled.div`
 
 export const ConversionDetailsContainer = styled.div`
   width: 100%;
-  height: 518px;
 
   h1 {
-    margin-bottom: 16px;
+    margin-bottom: 0.8rem;
   }
 `;
 
 export const ConversionDetails = styled.div`
   width: 100%;
-  height: 465px;
 
   display: flex;
   flex-direction: column;
 
-  background: #fff;
-  border-radius: 5px;
-  padding: 24px;
+  background: var(--paper-background-color);
+  border-radius: 0.5rem;
+  padding: 2.4rem;
 `;
 
 export const CurrencyQuote = styled.div`
@@ -133,7 +206,7 @@ export const CurrencyQuote = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  line-height: 32px;
+  line-height: 3.2rem;
 `;
 
 export const IOFFee = CurrencyQuote;

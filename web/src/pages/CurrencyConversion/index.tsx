@@ -5,36 +5,33 @@ import pt from 'date-fns/locale/pt-BR';
 import { BiTransfer } from 'react-icons/bi';
 
 import {
-  FormControl,
+  Container,
   FormControlLabel,
-  FormLabel,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
+  Grid,
   Radio,
   RadioGroup,
 } from '@material-ui/core';
 
 import {
   CloseValue,
-  Container,
-  Content,
-  ContentWrapper,
   ConversionDetails,
   ConversionDetailsContainer,
   ConvertedCurrencyWithFees,
   ConvertedCurrencyWithoutFees,
-  ConverterContainer,
   CurrencyExchange,
-  CurrencyItem,
+  CurrencyItemInput,
+  CurrencyItemOutput,
   CurrencyQuote,
   CurrencyWithFees,
   CurrencyWithoutFees,
+  InputBlock,
+  InputBlockGroup,
   IOFFee,
   LastQuote,
   LastQuoteContainer,
   MaximumValue,
   MinimumValue,
+  PaymentFieldset,
 } from './styles';
 
 import BRAImg from '../../assets/images/BRA.svg';
@@ -47,6 +44,7 @@ import getOriginalCurrencyWithoutFees from '../../utils/getOriginalCurrencyWithF
 import getIOF from '../../utils/getIOF';
 import getConvertedCurrencyWithoutFees from '../../utils/getConvertedCurrencyWithouFees';
 import formatCurrency from '../../utils/formatCurrency';
+import getOriginalCurrencyWithFees from '../../utils/getOriginalCurrencyWithFees';
 
 const CurrencyConversion: React.FC = () => {
   const [
@@ -165,12 +163,12 @@ const CurrencyConversion: React.FC = () => {
     if (currencyLastQuote) {
       return formatCurrency(
         currencyLastQuote.code,
-        getOriginalCurrencyWithoutFees(currencyAmount, stateFee, paymentType),
+        getOriginalCurrencyWithFees(currencyAmount, stateFee, paymentType),
       );
     }
 
     return 'Não disponível';
-  }, [currencyLastQuote, currencyAmount, stateFee, paymentType]);
+  }, [currencyAmount, currencyLastQuote, paymentType, stateFee]);
 
   const formattedConvertedCurrencyWithoutFees = useMemo(() => {
     if (currencyLastQuote) {
@@ -192,10 +190,16 @@ const CurrencyConversion: React.FC = () => {
   }, [currencyLastQuote, convertedCurrencyAmount]);
 
   return (
-    <Container>
-      <Content>
-        <ContentWrapper>
-          <ConverterContainer>
+    <Container
+      maxWidth="lg"
+      style={{
+        paddingTop: 64,
+        paddingBottom: 64,
+      }}
+    >
+      <Grid container spacing={3}>
+        <Grid item container xs={12} sm={12} md={7}>
+          <Grid item xs={12}>
             <LastQuoteContainer>
               <h1>Última cotação</h1>
               <LastQuote>
@@ -220,97 +224,74 @@ const CurrencyConversion: React.FC = () => {
                 )}
               </LastQuote>
             </LastQuoteContainer>
+          </Grid>
+          <Grid item xs={12}>
             <CurrencyExchange>
               <h1>Conversor de moeda</h1>
               <div>
-                <CurrencyItem>
+                <CurrencyItemInput>
                   {currencyLastQuote ? (
-                    <>
-                      <div>
-                        <img src={USDImg} alt={currencyLastQuote.code} />
-                        <FormControl
-                          style={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                          }}
+                    <div>
+                      <img src={USDImg} alt={currencyLastQuote.code} />
+
+                      <InputBlockGroup>
+                        <InputBlock>
+                          <legend>Montante</legend>
+                          <input
+                            id="currency_amount"
+                            name="currency_amount"
+                            type="number"
+                            min={0}
+                            required
+                            value={currencyAmount}
+                            onChange={handleCurrencyAmountChange}
+                          />
+                        </InputBlock>
+
+                        <InputBlock>
+                          <legend>Taxa do estado</legend>
+                          <input
+                            id="state_fee"
+                            name="state_fee"
+                            type="number"
+                            min={0}
+                            required
+                            value={stateFee}
+                            onChange={handleStateFeeChange}
+                          />
+                        </InputBlock>
+                      </InputBlockGroup>
+
+                      <PaymentFieldset>
+                        <legend>Pagamento</legend>
+                        <RadioGroup
+                          aria-label="payment_type"
+                          name="payment_type"
+                          value={paymentType}
+                          onChange={handlePaymentTypeChange}
+                          row
                         >
-                          <FormControl variant="outlined">
-                            <InputLabel htmlFor="currency_amount">
-                              Quantidade do montante
-                            </InputLabel>
-                            <OutlinedInput
-                              id="currency_amount"
-                              name="currency_amount"
-                              type="number"
-                              inputProps={{ min: 0 }}
-                              label="Quantidade do montante"
-                              required
-                              startAdornment={
-                                <InputAdornment position="start">
-                                  $
-                                </InputAdornment>
-                              }
-                              value={currencyAmount}
-                              onChange={handleCurrencyAmountChange}
-                              style={{ height: 40, marginRight: 8 }}
-                            />
-                          </FormControl>
-                          <FormControl variant="outlined">
-                            <InputLabel htmlFor="state_fee">
-                              Taxa do estado
-                            </InputLabel>
-                            <OutlinedInput
-                              id="state_fee"
-                              name="state_fee"
-                              type="number"
-                              inputProps={{ min: 0 }}
-                              label="Taxa do estado"
-                              required
-                              startAdornment={
-                                <InputAdornment position="start">
-                                  %
-                                </InputAdornment>
-                              }
-                              value={stateFee}
-                              onChange={handleStateFeeChange}
-                              style={{ height: 40, marginRight: 8 }}
-                            />
-                          </FormControl>
-                          <FormControl
-                            component="fieldset"
-                            style={{ marginLeft: 8 }}
-                          >
-                            <FormLabel component="legend">Pagamento</FormLabel>
-                            <RadioGroup
-                              aria-label="payment_type"
-                              name="payment_type"
-                              value={paymentType}
-                              onChange={handlePaymentTypeChange}
-                              row
-                            >
-                              <FormControlLabel
-                                value="cash"
-                                control={<Radio />}
-                                label="Dinheiro"
-                              />
-                              <FormControlLabel
-                                value="card"
-                                control={<Radio />}
-                                label="Cartão"
-                              />
-                            </RadioGroup>
-                          </FormControl>
-                        </FormControl>
-                      </div>
+                          <FormControlLabel
+                            value="cash"
+                            control={<Radio />}
+                            label="Dinheiro"
+                          />
+                          <FormControlLabel
+                            value="card"
+                            control={<Radio />}
+                            label="Cartão"
+                          />
+                        </RadioGroup>
+                      </PaymentFieldset>
+
                       <strong>{currencyLastQuote.code}</strong>
-                    </>
+                    </div>
                   ) : (
                     <span>Moeda não disponível.</span>
                   )}
-                </CurrencyItem>
+                </CurrencyItemInput>
                 <BiTransfer />
-                <CurrencyItem>
+                <CurrencyItemOutput>
                   {currencyLastQuote ? (
                     <>
                       <div>
@@ -322,10 +303,12 @@ const CurrencyConversion: React.FC = () => {
                   ) : (
                     <span>Moeda não disponível.</span>
                   )}
-                </CurrencyItem>
+                </CurrencyItemOutput>
               </div>
             </CurrencyExchange>
-          </ConverterContainer>
+          </Grid>
+        </Grid>
+        <Grid item xs={12} sm={12} md={5}>
           <ConversionDetailsContainer>
             <h1>Resumo</h1>
             <ConversionDetails>
@@ -373,8 +356,8 @@ const CurrencyConversion: React.FC = () => {
               </ConvertedCurrencyWithFees>
             </ConversionDetails>
           </ConversionDetailsContainer>
-        </ContentWrapper>
-      </Content>
+        </Grid>
+      </Grid>
     </Container>
   );
 };
