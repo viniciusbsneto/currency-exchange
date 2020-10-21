@@ -63,6 +63,7 @@ Try out at https://dollar-ex.netlify.app/
 - [x] Convert USD amount to BRL
 - [x] Conversion summary
   - Show last USD quote (bid) in BRL
+  - Show IOF fee
   - Show USD amount without fees
   - Show USD amount with fees
   - Show BRL amount without fees
