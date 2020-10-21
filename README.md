@@ -110,7 +110,7 @@ yarn start
 
 The following tools were used in the construction of the project:
 
-#### [](https://github.com/viniciusbsneto/currency-exchange#currency-exchange-web-application)**Catch N' Mall Web Application**
+#### [](https://github.com/viniciusbsneto/currency-exchange#currency-exchange-web-application)**Dollar Ex Web Application**
 
 -   **[typescript](https://www.typescriptlang.org/)**
 -   **[react](https://en.reactjs.org/)**
