@@ -1,23 +1,6 @@
 import styled from 'styled-components';
 
-export const LastQuoteContainer = styled.div`
-  margin-bottom: 1.6rem;
-
-  h1 {
-    margin-bottom: 0.8rem;
-  }
-`;
-
 export const LastQuote = styled.div`
-  width: 100%;
-
-  display: flex;
-  flex-direction: column;
-
-  background: var(--paper-background-color);
-  border-radius: 0.5rem;
-  padding: 2.4rem;
-
   > span {
     font-size: 1.4rem;
     margin-top: 1.6rem;
@@ -57,28 +40,6 @@ export const CurrencyExchange = styled.div`
       height: 2.8rem;
       margin: 0.8rem 0;
     }
-  }
-`;
-
-export const InputBlock = styled.fieldset`
-  width: 100%;
-  margin-right: 0.8rem;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-  padding: 0.8rem 1.6rem;
-  border: 0.1rem solid var(--light-color);
-  border-radius: 0.5rem;
-
-  input {
-    border: 0;
-    background: transparent;
-  }
-
-  legend {
-    font: 400 1.4rem Roboto;
   }
 `;
 
@@ -124,6 +85,9 @@ export const CurrencyItemInput = styled.div`
   background: var(--paper-background-color);
   border-radius: 0.5rem;
   padding: 2.4rem;
+  box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.302),
+    0 2px 6px 2px rgba(60, 64, 67, 0.149);
+  overflow: hidden;
 
   > div {
     width: 100%;
@@ -165,6 +129,9 @@ export const CurrencyItemOutput = styled.div`
   background: var(--paper-background-color);
   border-radius: 0.5rem;
   padding: 2.4rem;
+  box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.302),
+    0 2px 6px 2px rgba(60, 64, 67, 0.149);
+  overflow: hidden;
 
   div {
     display: flex;
@@ -180,25 +147,6 @@ export const CurrencyItemOutput = styled.div`
   strong {
     margin-left: auto;
   }
-`;
-
-export const ConversionDetailsContainer = styled.div`
-  width: 100%;
-
-  h1 {
-    margin-bottom: 0.8rem;
-  }
-`;
-
-export const ConversionDetails = styled.div`
-  width: 100%;
-
-  display: flex;
-  flex-direction: column;
-
-  background: var(--paper-background-color);
-  border-radius: 0.5rem;
-  padding: 2.4rem;
 `;
 
 export const CurrencyQuote = styled.div`

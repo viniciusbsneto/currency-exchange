@@ -2,7 +2,8 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { formatRelative } from 'date-fns';
 import pt from 'date-fns/locale/pt-BR';
-import { BiTransfer } from 'react-icons/bi';
+import { BiDollar, BiTransfer } from 'react-icons/bi';
+import { AiOutlinePercentage } from 'react-icons/ai';
 
 import {
   Container,
@@ -14,8 +15,6 @@ import {
 
 import {
   CloseValue,
-  ConversionDetails,
-  ConversionDetailsContainer,
   ConvertedCurrencyWithFees,
   ConvertedCurrencyWithoutFees,
   CurrencyExchange,
@@ -24,11 +23,9 @@ import {
   CurrencyQuote,
   CurrencyWithFees,
   CurrencyWithoutFees,
-  InputBlock,
   InputBlockGroup,
   IOFFee,
   LastQuote,
-  LastQuoteContainer,
   MaximumValue,
   MinimumValue,
   PaymentFieldset,
@@ -44,6 +41,8 @@ import getIOF from '../../utils/getIOF';
 import getConvertedCurrencyWithoutFees from '../../utils/getConvertedCurrencyWithouFees';
 import formatCurrency from '../../utils/formatCurrency';
 import getOriginalCurrencyWithFees from '../../utils/getOriginalCurrencyWithFees';
+import Card from '../../components/Card';
+import OutlinedInput from '../../components/OutlinedInput';
 
 const CurrencyConversion: React.FC = () => {
   const [
@@ -199,30 +198,27 @@ const CurrencyConversion: React.FC = () => {
       <Grid container spacing={3}>
         <Grid item container xs={12} sm={12} md={7}>
           <Grid item xs={12}>
-            <LastQuoteContainer>
-              <h1>Última cotação</h1>
-              <LastQuote>
-                {currencyLastQuote ? (
-                  <>
-                    <MinimumValue>
-                      <strong>Mínimo:</strong>
-                      <span>{formattedCurrencyLastQuoteLow}</span>
-                    </MinimumValue>
-                    <MaximumValue>
-                      <strong>Máximo:</strong>
-                      <span>{formattedCurrencyLastQuoteHigh}</span>
-                    </MaximumValue>
-                    <CloseValue>
-                      <strong>Fechamento</strong>
-                      <span>{formattedCurrencyLastQuoteClose}</span>
-                    </CloseValue>
-                    <span>{`Atualizado em: ${currencyLastQuoteDate}`}</span>
-                  </>
-                ) : (
-                  <span>Não foi possível obter a cotação.</span>
-                )}
-              </LastQuote>
-            </LastQuoteContainer>
+            <Card title="Última cotação">
+              {currencyLastQuote ? (
+                <LastQuote>
+                  <MinimumValue>
+                    <strong>Mínimo:</strong>
+                    <span>{formattedCurrencyLastQuoteLow}</span>
+                  </MinimumValue>
+                  <MaximumValue>
+                    <strong>Máximo:</strong>
+                    <span>{formattedCurrencyLastQuoteHigh}</span>
+                  </MaximumValue>
+                  <CloseValue>
+                    <strong>Fechamento</strong>
+                    <span>{formattedCurrencyLastQuoteClose}</span>
+                  </CloseValue>
+                  <span>{`Atualizado em: ${currencyLastQuoteDate}`}</span>
+                </LastQuote>
+              ) : (
+                <span>Não foi possível obter a cotação.</span>
+              )}
+            </Card>
           </Grid>
           <Grid item xs={12}>
             <CurrencyExchange>
@@ -234,31 +230,29 @@ const CurrencyConversion: React.FC = () => {
                       <img src={USDImg} alt={currencyLastQuote.code} />
 
                       <InputBlockGroup>
-                        <InputBlock>
-                          <legend>Montante</legend>
-                          <input
-                            id="currency_amount"
-                            name="currency_amount"
-                            type="number"
-                            min={0}
-                            required
-                            value={currencyAmount}
-                            onChange={handleCurrencyAmountChange}
-                          />
-                        </InputBlock>
+                        <OutlinedInput
+                          id="currency_amount"
+                          name="currency_amount"
+                          type="number"
+                          min={0}
+                          required
+                          label="Montante"
+                          icon={BiDollar}
+                          value={currencyAmount}
+                          onChange={handleCurrencyAmountChange}
+                        />
 
-                        <InputBlock>
-                          <legend>Taxa do estado</legend>
-                          <input
-                            id="state_fee"
-                            name="state_fee"
-                            type="number"
-                            min={0}
-                            required
-                            value={stateFee}
-                            onChange={handleStateFeeChange}
-                          />
-                        </InputBlock>
+                        <OutlinedInput
+                          id="state_fee"
+                          name="state_fee"
+                          type="number"
+                          min={0}
+                          required
+                          label="Taxa do estado"
+                          icon={AiOutlinePercentage}
+                          value={stateFee}
+                          onChange={handleStateFeeChange}
+                        />
                       </InputBlockGroup>
 
                       <PaymentFieldset>
@@ -308,53 +302,50 @@ const CurrencyConversion: React.FC = () => {
           </Grid>
         </Grid>
         <Grid item xs={12} sm={12} md={5}>
-          <ConversionDetailsContainer>
-            <h1>Resumo</h1>
-            <ConversionDetails>
-              <CurrencyQuote>
-                <strong>
-                  {`Cotação ${currencyLastQuote && currencyLastQuote.code}`}
-                </strong>
-                <span>{formattedCurrencyQuote}</span>
-              </CurrencyQuote>
-              <IOFFee>
-                <strong>IOF</strong>
-                <span>{formattedIOF}</span>
-              </IOFFee>
-              <CurrencyWithoutFees>
-                <strong>
-                  {`Total ${
-                    currencyLastQuote && currencyLastQuote.code
-                  } sem impostos`}
-                </strong>
-                <span>{formattedCurrencyWithoutFees}</span>
-              </CurrencyWithoutFees>
-              <CurrencyWithFees>
-                <strong>
-                  {`Total ${
-                    currencyLastQuote && currencyLastQuote.code
-                  } com impostos`}
-                </strong>
-                <span>{formattedCurrencyWithFees}</span>
-              </CurrencyWithFees>
-              <ConvertedCurrencyWithoutFees>
-                <strong>
-                  {`Total ${
-                    currencyLastQuote && currencyLastQuote.codein
-                  } sem impostos`}
-                </strong>
-                <span>{formattedConvertedCurrencyWithoutFees}</span>
-              </ConvertedCurrencyWithoutFees>
-              <ConvertedCurrencyWithFees>
-                <strong>
-                  {`Total ${
-                    currencyLastQuote && currencyLastQuote.codein
-                  } com impostos`}
-                </strong>
-                <span>{formattedConvertedCurrencyWithFees}</span>
-              </ConvertedCurrencyWithFees>
-            </ConversionDetails>
-          </ConversionDetailsContainer>
+          <Card title="Resumo">
+            <CurrencyQuote>
+              <strong>
+                {`Cotação ${currencyLastQuote && currencyLastQuote.code}`}
+              </strong>
+              <span>{formattedCurrencyQuote}</span>
+            </CurrencyQuote>
+            <IOFFee>
+              <strong>IOF</strong>
+              <span>{formattedIOF}</span>
+            </IOFFee>
+            <CurrencyWithoutFees>
+              <strong>
+                {`Total ${
+                  currencyLastQuote && currencyLastQuote.code
+                } sem impostos`}
+              </strong>
+              <span>{formattedCurrencyWithoutFees}</span>
+            </CurrencyWithoutFees>
+            <CurrencyWithFees>
+              <strong>
+                {`Total ${
+                  currencyLastQuote && currencyLastQuote.code
+                } com impostos`}
+              </strong>
+              <span>{formattedCurrencyWithFees}</span>
+            </CurrencyWithFees>
+            <ConvertedCurrencyWithoutFees>
+              <strong>
+                {`Total ${
+                  currencyLastQuote && currencyLastQuote.codein
+                } sem impostos`}
+              </strong>
+              <span>{formattedConvertedCurrencyWithoutFees}</span>
+            </ConvertedCurrencyWithoutFees>
+            <ConvertedCurrencyWithFees>
+              <strong>
+                {`Total ${
+                  currencyLastQuote && currencyLastQuote.codein
+                } com impostos`}
+              </strong>
+              <span>{formattedConvertedCurrencyWithFees}</span>
+            </ConvertedCurrencyWithFees>
+          </Card>
         </Grid>
       </Grid>
     </Container>
