@@ -5,8 +5,7 @@ export default createGlobalStyle`
     font-size: 60%;
 
     --primary-color: #84ce46;
-    --secondary-color:  #0f6c87;
-    --title-color: #322153;
+    --secondary-color:  #322153;
     --text-color: #101114;
     --light-color: #eee;
     --paper-background-color: #fff;
@@ -34,7 +33,7 @@ export default createGlobalStyle`
   }
 
   h1, h2, h3, h4, h5, h6 {
-    color: var(--title-color);
+    color: var(--secondary-color);
   }
 
   button {
