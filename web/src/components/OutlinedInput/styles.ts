@@ -21,7 +21,7 @@ export const Container = styled.fieldset<ContainerProps>`
   ${props =>
     props.isFocused &&
     css`
-      border-color: var(--title-color);
+      border-color: var(--secondary-color);
     `}
 
   legend {
@@ -30,18 +30,18 @@ export const Container = styled.fieldset<ContainerProps>`
 
   svg {
     margin-right: 0.2rem;
-    color: var(--title-color);
+    color: var(--secondary-color);
 
     ${props =>
       props.isFilled &&
       css`
-        color: var(--title-color);
+        color: var(--secondary-color);
       `}
 
     ${props =>
       props.isFocused &&
       css`
-        color: var(--title-color);
+        color: var(--secondary-color);
       `}
   }
 
